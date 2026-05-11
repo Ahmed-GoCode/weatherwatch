@@ -1,0 +1,37 @@
+workflows:
+  android-apk:
+    name: WeatherWatch – Android APK
+    max_build_duration: 60
+    environment:
+      flutter: stable
+      java: 17
+      groups:
+        - release-signing
+    scripts:
+      - name: Setup signing key
+        script: |
+          echo "$CM_KEYSTORE_B64" | base64 -d > android/release-key.jks
+          cat > android/key.properties << EOF
+          storePassword=$CM_KEYSTORE_PASSWORD
+          keyPassword=$CM_KEY_PASSWORD
+          keyAlias=release-key
+          storeFile=release-key.jks
+          EOF
+
+      - name: Check repo structure
+        script: find . -not -path "./.git/*" | sort | head -80
+
+      - name: Flutter version
+        script: flutter --version
+
+      - name: Get packages
+        script: flutter pub get
+
+      - name: Analyze
+        script: flutter analyze --no-fatal-infos || true
+
+      - name: Build APK
+        script: flutter build apk --release --no-tree-shake-icons
+
+    artifacts:
+      - build/app/outputs/flutter-apk/app-release.apk
