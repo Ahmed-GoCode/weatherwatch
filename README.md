@@ -2,12 +2,6 @@
 
 WeatherWatch is a Flutter weather app for Android that displays current weather, hourly forecasts, and daily outlook details in a clean UI.
 
-## 📸 Screenshots
-
-![WeatherWatch screenshot 1](assets/images/ww1.jpg)
-
-![WeatherWatch screenshot 2](assets/images/ww2.jpg)
-
 ## ✨ Key Features
 
 - Current weather conditions with temperature, humidity, wind, and description
